@@ -24,12 +24,9 @@ const CreatePost = () => {
       if (form.image && form.imageDescription && form.name) {
         setSharing(true)
         const response = await axios.post("http://localhost:3000/api/v1/post/add", form)
-        console.log(response);
-        console.log(response.data);
-        if (response.data.status === 201) {
+        if (response.status === 201) {
           navigate("/")
         }
-        console.log(response);
       }
     }
     catch (err) {
@@ -54,15 +51,14 @@ const CreatePost = () => {
 
       } else {
         if (form.name.trim() === "") {
-          setModal({ hasError: true, message: "Please enter name" })
+          setModal({ hasError: true, message: "Please enter your name" })
         } else {
-          setModal({ hasError: true, message: "Please enter image description" })
+          setModal({ hasError: true, message: "Please write image description" })
         }
       }
     } catch (e) {
       console.log(e);
       setModal({ hasError: true, message: "Sorry, this request could not be completed" })
-      alert('something went wrong')
     } finally {
       setGeneratingImage(false)
     }

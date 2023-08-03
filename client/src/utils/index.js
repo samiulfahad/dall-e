@@ -1,3 +1,4 @@
+import FileSaver from "file-saver"
 import { surpriseMePrompts } from "../constants"
 
 export function randomImageDescription (imageDescription) {
@@ -6,3 +7,7 @@ export function randomImageDescription (imageDescription) {
     if (randomDescription === imageDescription) randomImageDescription(imageDescription)
     return randomDescription
 }
+
+export async function downloadImage (_id, imageUrl) {
+    FileSaver.saveAs(imageUrl, `download-${_id}.jpg`)
+} 

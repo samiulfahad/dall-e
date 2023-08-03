@@ -1,19 +1,39 @@
 import { useState, useEffect } from "react";
-import { Card, Loader, FormField } from "../components";
-
-const RenderCards = ({data, notFoundMsg}) =>{
-  if(data.length > 0) {
-    return data.map(post => {
-      <Card key={post._id} {...post} />
-    })
-  }
-  return <h2 className="text-[20px] font-bold text-center mt-8 text-black">{notFoundMsg}</h2>
-}
+import axios from "axios";
+import { Loader, FormField, Posts } from "../components";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
+  const [searchResult, setSearchResult] = useState([])
+  const [searchTimeout, setSearchTimeout] = useState(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      const response = await axios.get('http://localhost:3000/api/v1/post/all')
+      const posts = response.data.posts.reverse()
+      setPosts(posts)
+      {posts.length === 0 && <p className="text-center mt-4 text-lg font-bold">No Post yet</p> }
+      setLoading(false)
+    }
+    fetchData()
+  }, [])
+
+  const handleSearch = e => {
+    setLoading(true)
+    clearTimeout(searchTimeout)
+    setSearch(old => e.target.value.trim())
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = posts.filter(post => post.name.toLowerCase().includes(search.toLowerCase()) || post.imageDescription.toLowerCase().includes(search.toLowerCase()))
+        setSearchResult(searchResult)
+        setLoading(false)
+      }, 500)
+    )
+    console.log(searchResult);
+  }
 
   return (
     <section>
@@ -21,20 +41,23 @@ const Home = () => {
         <h1 className="text-[25px] mt-4 text-black">DALL-E API by OpenAI</h1>
         <p className="text-[15px] text-gray-700">Generate image from descriptive text, powered by OpenAI</p>
       </div>
+      <FormField type="text" name="search" value={search} placeholder="Search post......." handleChange={handleSearch} />
+
       {loading ? (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-20">
           <Loader />
         </div>
       ) : (
         <>
-          {search && 
-            <p className="text-[15x] text-black">
-              Showing search result for <span className="font-bold text-gray-800 italic">{search}</span>
+          {search &&
+            <p className="text-[15x] mx-auto w-full text-center text-black">
+              {search && searchResult.length === 0 && <p className="text-center mt-4 text-lg font-bold">Nothing found by this search</p>}
+              Showing {searchResult.length} search result for <span className="font-bold text-gray-800 italic">{search}</span>
             </p>
           }
-          {/* grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 */}
-          <div className="flex justify-center items-center">
-            {search ? <RenderCards data={[]} notFoundMsg="No Search Result Found"/> : <RenderCards data={posts} notFoundMsg="No Post found"/>}
+          {/* grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3 */}
+          <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3 mt-6">
+            {search ? <Posts list={searchResult} /> : <Posts list={posts} />}
           </div>
         </>
       )}
