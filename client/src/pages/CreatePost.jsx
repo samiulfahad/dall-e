@@ -9,7 +9,7 @@ import Modal from "../components/modal";
 
 const CreatePost = () => {
   const navigate = useNavigate()
-  const [form, setForm] = useState({ name: "", imageDescription: "", image: "" })
+  const [form, setForm] = useState({ name: "", imageDescription: "", image: "", resolution: "mid" })
   const [sharing, setSharing] = useState(false)
   const [generatingImage, setGeneratingImage] = useState(false)
   const [modal, setModal] = useState({ hasError: false, message: "" })
@@ -17,7 +17,7 @@ const CreatePost = () => {
   const shareImage = async (e) => {
     e.preventDefault()
     if (form.image === "") {
-      setModal({hasError: true, message: "Please generate an image first"})
+      setModal({ hasError: true, message: "Please generate an image first" })
       return
     }
     try {
@@ -31,7 +31,7 @@ const CreatePost = () => {
     }
     catch (err) {
       console.log(err);
-      setModal({hasError: true, message: "Something went wrong"})
+      setModal({ hasError: true, message: "Something went wrong" })
     }
     finally {
       setSharing(false)
@@ -66,6 +66,7 @@ const CreatePost = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
+    console.log(form);
   }
 
   const handleExample = (e) => {
@@ -81,7 +82,7 @@ const CreatePost = () => {
     <section>
       {modal.hasError && <Modal onClose={closeModal} message={modal.message} />}
       <form onSubmit={shareImage}>
-        <div className="flex flex-col items-start space-y-4 mt-10">
+        <div className="flex flex-col items-start justify-start space-y-4 mt-10">
           <FormField
             label="Your Name" type="text" name="name"
             placeholder="Enter your name" value={form.name} handleChange={handleChange}
@@ -93,6 +94,14 @@ const CreatePost = () => {
             example handleExample={handleExample}
 
           />
+          <div className="flex space-x-4 justify-center items-center w-full mx-auto">
+            <p className="font-bold text-indigo-500">Resolution: </p>
+            <select name="resolution" onChange={handleChange} value={form.resolution} className="outline-none border-2 border-indigo-500 rounded-lg">
+              <option value="high">1024x1024</option>
+              <option value="mid">512x512</option>
+              <option value="low">256x256</option>
+            </select>
+          </div>
 
         </div>
 
@@ -107,11 +116,22 @@ const CreatePost = () => {
           }
         </div>
         <div className="flex flex-col space-y-4 justify-center items-center mb-[80px]">
-          {!sharing &&
+          {/* <div className="flex justify-center items-center space-x-4 mt-8">
+            <p className="font-bold text-indigo-500">Resolution: </p>
+            <select name="resolution" onChange={handleChange} value={form.resolution} className="outline-none border-2 border-indigo-500 rounded-lg">
+              <option value="high">1024x1024</option>
+              <option value="mid">512x512</option>
+              <option value="low">256x256</option>
+            </select>
+          </div> */}
+          {
+            !sharing &&
             <button className="button" onClick={generateImage}>
               {generatingImage ? "Generating....." : "Generate Image"}
-            </button>}
-          {!generatingImage &&
+            </button>
+          }
+          {
+            !generatingImage &&
             <button className="button" onClick={shareImage}> {sharing ?
               <div className="flex justify-center items-center space-x-4">
                 <p>Sharing</p>

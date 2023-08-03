@@ -19,15 +19,26 @@ router.get("/", (req, res) => {
 
 router.post('/generate', async (req, res, next) => {
     try {
-        const { imageDescription } = req.body
+        let { imageDescription, resolution } = req.body
+
+        if (resolution === "low") {
+            resolution = "256x256"
+        } else if (resolution === "mid") {
+            resolution = "512x512"
+        } else if (resolution === "high") {
+            resolution = "1024x1024"
+        } else {
+            resolution = "256x256"
+        }
+
         const response = await openai.createImage({
             prompt: imageDescription,
             n: 1,
-            size: "256x256",
+            size: resolution,
             response_format: 'b64_json'
         });
         const image = response.data.data[0].b64_json;
-        res.status(200).json({image: image})
+        res.status(200).json({ image: image })
     }
     catch (err) {
         next(err)
