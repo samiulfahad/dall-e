@@ -4,7 +4,7 @@ import axios from 'axios'
 import { preview } from "../assets"
 import { FormField, Loader } from "../components";
 import { randomImageDescription } from "../utils"
-import Modal from "../components/modal";
+import Modal from "../components/Modal";
 
 
 const CreatePost = () => {
@@ -99,8 +99,8 @@ const CreatePost = () => {
           />
           <div className="flex space-x-4 justify-center items-center w-full mx-auto">
             <p className="font-bold text-indigo-500">Resolution: </p>
-            <select name="resolution" onChange={handleChange} value={form.resolution} className="outline-none border-2 border-indigo-500 rounded-lg">
-              <option value="high">1024x1024</option>
+            <select  name="resolution" onChange={handleChange} value={form.resolution} className="pl-6 outline-none border-2 border-indigo-500 rounded-lg">
+              <option  value="high">1024x1024</option>
               <option value="mid">512x512</option>
               <option value="low">256x256</option>
             </select>

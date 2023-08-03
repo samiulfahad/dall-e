@@ -2,6 +2,7 @@ import React from "react";
 import { logo } from "./assets";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import { Home, CreatePost } from "./pages";
+import PageNotFound from "./pages/PageNotFound";
 
 const App = () => {
   return (
@@ -18,6 +19,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/*" element={<PageNotFound />} />
+
         </Routes>
       </div>
     </BrowserRouter>
