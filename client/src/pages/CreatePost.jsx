@@ -23,7 +23,7 @@ const CreatePost = () => {
     try {
       if (form.image && form.imageDescription && form.name) {
         setSharing(true)
-        const response = await axios.post("http://localhost:3000/api/v1/post/add", form)
+        const response = await axios.post("https://dall-e-j56l.onrender.com/api/v1/post/add", form)
         if (response.status === 201) {
           navigate("/")
         }
@@ -44,7 +44,7 @@ const CreatePost = () => {
     try {
       if (form.name && form.imageDescription) {
         setGeneratingImage(true)
-        const response = await axios.post("http://localhost:3000/api/v1/dall-e/generate", {
+        const response = await axios.post("https://dall-e-j56l.onrender.com/api/v1/dall-e/generate", {
           imageDescription: form.imageDescription
         })
         setForm({ ...form, image: `data:image/jpeg;base64,${response.data.image}` })
