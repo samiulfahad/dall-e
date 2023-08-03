@@ -16,7 +16,7 @@ app.use("/api/v1/post", postRouter)
 
 
 app.get("/", (req, res) => {
-    res.send("Hello from express...........")
+    res.send("API for Project Dall-e clone")
 })
 
 
@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
     }
 })
 
-const PORT = 3000
+const PORT = process.env.PORT
 app.listen(PORT, async () => {
     await connectDB()
     console.log("Server is listening on port " + PORT);
