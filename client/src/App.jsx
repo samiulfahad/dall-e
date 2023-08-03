@@ -3,6 +3,7 @@ import { logo } from "./assets";
 import { BrowserRouter, Link, Routes, Route } from "react-router-dom";
 import { Home, CreatePost } from "./pages";
 import PageNotFound from "./pages/PageNotFound";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -15,14 +16,14 @@ const App = () => {
           Create
         </Link>
       </header>
-      <div className="px-10 md:px-20">
+      <main className="px-10 md:px-20">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/*" element={<PageNotFound />} />
-
         </Routes>
-      </div>
+      </main>
+      <Footer/>
     </BrowserRouter>
   );
 };

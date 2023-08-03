@@ -39,8 +39,8 @@ const Home = () => {
   return (
     <section>
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-[25px] mt-4 text-black">DALL-E API by OpenAI</h1>
-        <p className="text-[15px] text-gray-700">Generate image from descriptive text, powered by OpenAI</p>
+        <h1 className="text-[25px] mt-4 text-black">DALL-E by OpenAI</h1>
+        <p className="text-[15px] text-gray-700 text-center">Generate image from descriptive text, powered by OpenAI</p>
       </div>
       <FormField type="text" name="search" value={search} placeholder="Search post......." handleChange={handleSearch} />
 

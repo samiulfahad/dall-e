@@ -118,7 +118,7 @@ const CreatePost = () => {
             </div>
           }
         </div>
-        <div className="flex flex-col space-y-4 justify-center items-center mb-[80px]">
+        <div className="flex flex-col space-y-4 justify-center items-center">
           {
             !sharing &&
             <button className="button" onClick={generateImage}>
