@@ -5,7 +5,7 @@ import { Loader, FormField, Posts } from "../components";
 const Home = () => {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([])
   const [searchTimeout, setSearchTimeout] = useState(null)
 
