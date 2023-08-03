@@ -20,7 +20,6 @@ router.get("/", (req, res) => {
 router.post('/generate', async (req, res, next) => {
     try {
         let { imageDescription, resolution } = req.body
-
         if (resolution === "low") {
             resolution = "256x256"
         } else if (resolution === "mid") {

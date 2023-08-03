@@ -9,21 +9,24 @@ import Modal from "../components/modal";
 
 const CreatePost = () => {
   const navigate = useNavigate()
-  const [form, setForm] = useState({ name: "", imageDescription: "", image: "", resolution: "mid" })
+  const [form, setForm] = useState({ name: "", imageDescription: "", imageUrl: "", resolution: "mid" })
   const [sharing, setSharing] = useState(false)
   const [generatingImage, setGeneratingImage] = useState(false)
   const [modal, setModal] = useState({ hasError: false, message: "" })
 
+  const url = "https://dall-e-j56l.onrender.com"
+  const url2 = "http://localhost:3000"
+
   const shareImage = async (e) => {
     e.preventDefault()
-    if (form.image === "") {
+    if (form.imageUrl === "") {
       setModal({ hasError: true, message: "Please generate an image first" })
       return
     }
     try {
-      if (form.image && form.imageDescription && form.name) {
+      if (form.imageUrl && form.imageDescription && form.name) {
         setSharing(true)
-        const response = await axios.post("https://dall-e-j56l.onrender.com/api/v1/post/add", form)
+        const response = await axios.post(url + "/api/v1/post/add", form)
         if (response.status === 201) {
           navigate("/")
         }
@@ -44,10 +47,11 @@ const CreatePost = () => {
     try {
       if (form.name && form.imageDescription) {
         setGeneratingImage(true)
-        const response = await axios.post("https://dall-e-j56l.onrender.com/api/v1/dall-e/generate", {
-          imageDescription: form.imageDescription
+        const response = await axios.post(url + "/api/v1/dall-e/generate", {
+          imageDescription: form.imageDescription,
+          resolution: form.resolution
         })
-        setForm({ ...form, image: `data:image/jpeg;base64,${response.data.image}` })
+        setForm({ ...form, imageUrl: `data:image/jpeg;base64,${response.data.image}` })
 
       } else {
         if (form.name.trim() === "") {
@@ -106,8 +110,8 @@ const CreatePost = () => {
         </div>
 
         <div className="relative mx-auto bg-gray-50 border border-gray-300 mt-4 text-sm rounded-lg w-60 h-60 p-3 flex justify-center item-center">
-          {form.image ?
-            <img src={form.image} alt={form.imageDescription} className="w-full h-full object-contain" />
+          {form.imageUrl ?
+            <img src={form.imageUrl} alt={form.imageDescription} className="w-full h-full object-contain" />
             : <img src={preview} alt="Preview" className="w-9/12 h-9/12 object-contain opacity-40" />}
           {generatingImage &&
             <div className="absolute flex justify-center items-center inset-0 bg-[rgba(0,0,0,0.5)] z-0">
@@ -116,14 +120,6 @@ const CreatePost = () => {
           }
         </div>
         <div className="flex flex-col space-y-4 justify-center items-center mb-[80px]">
-          {/* <div className="flex justify-center items-center space-x-4 mt-8">
-            <p className="font-bold text-indigo-500">Resolution: </p>
-            <select name="resolution" onChange={handleChange} value={form.resolution} className="outline-none border-2 border-indigo-500 rounded-lg">
-              <option value="high">1024x1024</option>
-              <option value="mid">512x512</option>
-              <option value="low">256x256</option>
-            </select>
-          </div> */}
           {
             !sharing &&
             <button className="button" onClick={generateImage}>

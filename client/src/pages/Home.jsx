@@ -9,13 +9,14 @@ const Home = () => {
   const [searchResult, setSearchResult] = useState([])
   const [searchTimeout, setSearchTimeout] = useState(null)
 
+  const url = "https://dall-e-j56l.onrender.com"
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const response = await axios.get('https://dall-e-j56l.onrender.com/api/v1/post/all')
+      const response = await axios.get(url + "/api/v1/post/all")
       const posts = response.data.posts.reverse()
       setPosts(posts)
-      {posts.length === 0 && <p className="text-center mt-4 text-lg font-bold">No Post yet</p> }
+      { posts.length === 0 && <p className="text-center mt-4 text-lg font-bold">No Post yet</p> }
       setLoading(false)
     }
     fetchData()
