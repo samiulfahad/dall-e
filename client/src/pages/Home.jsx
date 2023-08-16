@@ -39,7 +39,7 @@ const Home = () => {
   return (
     <section>
       <div className="flex flex-col justify-center items-center">
-        <h1 className="text-[25px] mt-4 text-black">DALL-E by OpenAI</h1>
+        <h1 className="text-[25px] mt-4 text-black">DALL-E clone</h1>
         <p className="text-[15px] text-gray-700 text-center">Generate image from descriptive text, powered by OpenAI</p>
       </div>
       <FormField type="text" name="search" value={search} placeholder="Search post......." handleChange={handleSearch} />
@@ -51,7 +51,7 @@ const Home = () => {
       ) : (
         <>
           {search &&
-            <p className="text-[15x] mx-auto w-full text-center text-black">
+            <p className="text-[15x] mx-auto w-full text-center">
               {search && searchResult.length === 0 && <p className="text-center mt-4 text-lg font-bold">Nothing found by this search</p>}
               Showing {searchResult.length} search result for <span className="font-bold text-gray-800 italic">{search}</span>
             </p>
