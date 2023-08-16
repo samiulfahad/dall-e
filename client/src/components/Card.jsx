@@ -9,7 +9,7 @@ const Card = (props) => {
       <div className="relative group">
         <img src={props.imageUrl} alt='image' className='w-full h-auto rounded-lg object-cover' />
         <div className='bg-gray-600 absolute bottom-0 flex flex-wrap max-h-[60%] w-full bg-opacity-0 group-hover:bg-opacity-80 duration-300'>
-          <p className={opacity + " text-left text-white text-[15px] font-bold px-2"}>{props.description}</p>
+          <p className={opacity + " text-left text-white text-[15px] px-2"}>{props.description}</p>
           <div className='flex justify-between w-full px-2 pb-2 items-center'>
             <div className='flex justify-start items-center space-x-2'>
               <p className={opacity + " bg-green-500 h-6 w-6 rounded-full text-center text-white"}>{props.name[0].toUpperCase()}</p>

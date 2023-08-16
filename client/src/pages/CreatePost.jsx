@@ -34,6 +34,7 @@ const CreatePost = () => {
     }
     catch (err) {
       console.log(err);
+
       setModal({ hasError: true, message: "Something went wrong" })
     }
     finally {
